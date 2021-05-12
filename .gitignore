@@ -1,0 +1,8 @@
+.classpath
+.project
+.idea
+*.iml
+.tern-project
+.settings/
+target/
+logs

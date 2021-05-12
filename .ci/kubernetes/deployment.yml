@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sabiane-data
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sabiane-data
+  template:
+    metadata:
+      labels:
+        app: sabiane-data
+    spec:
+      containers:
+        - name: sabiane-data
+          image: inseefrlab/sabiane-data:latest
+          imagePullPolicy: Always
+          env:
+            - name: fr.insee.sabianedata.api.scheme
+              value: https
+            - name: fr.insee.sabianedata.api.host
+              value: sabiane-data.dev.insee.io
+            - name: springdoc.swagger-ui.oauth.clientId
+              value: sabiane-data
