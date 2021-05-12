@@ -22,7 +22,7 @@
 		<springdoc-openapi-ui.version>1.5.5</springdoc-openapi-ui.version>
 		<saxon.version>9.7.0-8</saxon.version>		
 		<xalan.version>2.7.1</xalan.version>
-		<commons-io.version>2.5</commons-io.version>
+		<commons-io.version>2.7</commons-io.version>
 
 	</properties>
 
