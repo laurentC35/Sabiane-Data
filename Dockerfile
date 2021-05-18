@@ -1,8 +1,5 @@
-FROM tomcat:9.0.38-jdk11-openjdk
+FROM openjdk:11-jre-slim
 
-RUN rm -rf $CATALINA_HOME/webapps/*
-ADD src/main/resources/log4j2.xml $CATALINA_HOME/webapps/log4j2.xml
-ADD src/main/resources/sabianedata-server.properties $CATALINA_HOME/webapps/sabianedata.properties
-ADD ./target/*.war $CATALINA_HOME/webapps/ROOT.war
+ADD ./target/*.war app.jar
 
-CMD ["catalina.sh", "run"]
+ENTRYPOINT ["java","-jar","/app.jar"]

@@ -5,8 +5,8 @@
 
 	<groupId>fr.insee</groupId>
 	<artifactId>sabiane-data</artifactId>
-	<packaging>war</packaging>
-	<version>1.4.1</version>
+	<packaging>jar</packaging>
+	<version>1.4.2</version>
 	<name>Sabiane Data</name>
 
 	<properties>
@@ -216,35 +216,28 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
 				<configuration>
-					<source>11</source>
-					<target>11</target>
+					<source>8</source>
+					<target>8</target>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>2.4.3</version>
 				<executions>
 					<execution>
-						<id>build-info</id>
+						<id>repackage</id>
 						<goals>
-							<goal>build-info</goal>
+							<goal>repackage</goal>
 						</goals>
+					</execution>
+					<execution>
+						<id>conf</id>
+						<configuration>
+							<mainClass>fr.insee.sabianedata.ws.AppWS</mainClass>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>3.3.1</version>
-				<configuration>
-					<warName>${final.war.name}</warName>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration>
-			</plugin>
-
 		</plugins>
 	</build>
 </project>
