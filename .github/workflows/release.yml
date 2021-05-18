@@ -24,6 +24,7 @@ jobs:
           name: jar
           path: target/*.jar
   release:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout current branch
