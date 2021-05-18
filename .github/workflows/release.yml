@@ -18,11 +18,11 @@ jobs:
           java-version: 11
       - name: Build with Maven
         run: mvn install --file pom.xml
-      - name: Upload war
+      - name: Upload jar
         uses: actions/upload-artifact@v2
         with:
-          name: war
-          path: target/*.war
+          name: jar
+          path: target/*.jar
   release:
     runs-on: ubuntu-latest
     steps:
@@ -51,8 +51,8 @@ jobs:
         id: download
         uses: actions/download-artifact@v2
         with:
-          name: war
-          path: target/*.war
+          name: jar
+          path: target/*.jar
       - name: Get current version
         id: version
         run: echo "::set-output name=prop::$(mvn -f pom.xml help:evaluate -Dexpression=project.version -q -DforceStdout)"
