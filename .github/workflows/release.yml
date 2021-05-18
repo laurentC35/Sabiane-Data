@@ -50,6 +50,7 @@ jobs:
         with:
           name: jar
           path: target/*.jar
+      - run: ls .
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -57,7 +58,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.release_snapshot.outputs.upload_url }}
-          asset_path: target/*.jar
+          asset_path: Sabiane-Data/target/sabianedata.jar
           asset_name: sabianedata.jar
           asset_content_type: application/java-archive
   docker:
