@@ -119,30 +119,35 @@ public class QueenApiController {
         List<NomenclatureDto> nomenclatureDtos = queenExtractEntities.getQueenNomenclaturesDtoFromFods(fodsInput, folderTemp.toString());
         List<SurveyUnitDto> sus = queenExtractEntities.getQueenSurveyUnitsFromFods(fodsInput, folderTemp.toString());
 
-        int nomenclaturesSuccess = 0;
-        int questionnairesSuccess = 0;
-        int surveyUnitsSuccess = 0;
+        long nomenclaturesSuccess;
+        long questionnairesSuccess;
+        long surveyUnitsSuccess;
         boolean campaignSuccess = false;
+
         LOGGER.info("Trying to post " + nomenclatureDtos.size() + " nomenclatures");
-        for (NomenclatureDto q : nomenclatureDtos) {
+        nomenclaturesSuccess = nomenclatureDtos.stream().parallel().filter(n -> {
             try {
-                queenApiService.postNomenclaturesToApi(request, q, plateform);
-                nomenclaturesSuccess++;
+                queenApiService.postNomenclaturesToApi(request, n, plateform);
+                return true;
             } catch (Exception e) {
-                LOGGER.error("Error during creation of nomenclature :" + q.getId());
+                LOGGER.error("Error during creation of nomenclature :" + n.getId());
                 LOGGER.error(e.getMessage());
+                return false;
             }
-        }
+        }).count();
+
         LOGGER.info("Trying to post " + questionnaireModelDtos.size() + " questionnaires");
-        for (QuestionnaireModelDto q : questionnaireModelDtos) {
+        questionnairesSuccess = questionnaireModelDtos.stream().parallel().filter(q -> {
             try {
                 queenApiService.postQuestionnaireModelToApi(request, q, plateform);
-                questionnairesSuccess++;
+                return true;
             } catch (Exception e) {
                 LOGGER.error("Error during creation of questionnaire :" + q.getIdQuestionnaireModel());
                 LOGGER.error(e.getMessage());
+                return false;
             }
-        }
+        }).count();
+
         LOGGER.info("Trying to post campaign");
         try {
             queenApiService.postCampaignToApi(request, campaignDto, plateform);
@@ -152,15 +157,17 @@ public class QueenApiController {
             LOGGER.error(e.getMessage());
         }
         LOGGER.info("Trying to post " + sus.size() + " survey-units");
-        for (SurveyUnitDto su : sus) {
+        surveyUnitsSuccess = sus.stream().parallel().filter( su -> {
             try {
                 queenApiService.postUeToApi(request, su, campaignDto, plateform);
-                surveyUnitsSuccess++;
+                return true;
             } catch (Exception e) {
                 LOGGER.error("Error during creation of surveyUnit :" + su.getId());
                 LOGGER.error(e.getMessage());
-            }
-        }
+                return false;
+            }}
+        ).count();
+
         boolean success = campaignSuccess
                 && nomenclaturesSuccess == nomenclatureDtos.size()
                 && questionnairesSuccess == questionnaireModelDtos.size()
