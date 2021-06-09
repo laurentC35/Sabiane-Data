@@ -23,7 +23,7 @@
                 <xsl:if test="normalize-space($row)!=''">
                     <SurveyUnit>
                         <Id><xsl:value-of select="tools:getColumn($row,1)"/></Id>
-                        <QuestionnaireId><xsl:value-of select="tools:getColumn($row,2)"/></QuestionnaireId>
+                        <QuestionnaireId><xsl:value-of select="lower-case(tools:getColumn($row,2))"/></QuestionnaireId>
                         <PersonalizationFile><xsl:value-of select="tools:getColumn($row,3)"/></PersonalizationFile>
                         <DataFile><xsl:value-of select="tools:getColumn($row,4)"/></DataFile>
                         <CommentFile><xsl:value-of select="tools:getColumn($row,5)"/></CommentFile>

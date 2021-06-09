@@ -16,7 +16,7 @@
     
     <xsl:variable name="campaign">
         <xsl:variable name="temp" select="//office:spreadsheet/table:table[@table:name='campaign']"/>
-        <xsl:value-of select="tools:getColumn(tools:get-full-row($temp/table:table-row[2]),1)"/>
+        <xsl:value-of select="lower-case(tools:getColumn(tools:get-full-row($temp/table:table-row[2]),1))"/>
     </xsl:variable>
     
     <xsl:function name="tools:get-persons">
