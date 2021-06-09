@@ -29,13 +29,13 @@
                 <xsl:variable name="row" select="tools:get-full-row(.)"/>
                 <xsl:if test="normalize-space($row)!=''">
                     <QuestionnaireModel>
-                        <Id><xsl:value-of select="tools:getColumn($row, 1)"/></Id>
+                        <Id><xsl:value-of select="lower-case(tools:getColumn($row, 1))"/></Id>
                         <Label><xsl:value-of select="tools:getColumn($row, 2)"/></Label>
                         <CampaignId><xsl:value-of select="$campaignId"/></CampaignId>
                         <RequiredNomenclatures>
                             <xsl:for-each select="tokenize(tools:getColumn($row, 3), ',')">
                                 <Nomenclature>
-                                    <xsl:value-of select="."/>
+                                    <xsl:value-of select="lower-case(.)"/>
                                 </Nomenclature>
                             </xsl:for-each>
                         </RequiredNomenclatures>                        

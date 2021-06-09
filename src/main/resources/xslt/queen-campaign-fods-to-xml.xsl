@@ -26,14 +26,14 @@
     
     <xsl:template match="office:body/office:spreadsheet/table:table[@table:name='operation']">
         <xsl:variable name="row" select="tools:get-full-row(table:table-row[2])"/>
-        <Id><xsl:value-of select="tools:getColumn($row,1)"/></Id>
+        <Id><xsl:value-of select="lower-case(tools:getColumn($row,1))"/></Id>
         <Label><xsl:value-of select="tools:getColumn($row,2)"/></Label>
     </xsl:template>
     
     <xsl:template match="office:body/office:spreadsheet/table:table[@table:name='questionnaireModel']">        
         <xsl:variable name="row" select="tools:get-full-row(table:table-row[2])"/>
         <QuestionnaireModel>
-            <Id><xsl:value-of select="tools:getColumn($row,1)"/></Id>
+            <Id><xsl:value-of select="lower-case(tools:getColumn($row,1))"/></Id>
             <Label><xsl:value-of select="tools:getColumn($row,2)"/></Label>
             <xsl:copy-of select="$questionnaire"/>
             <RequiredNomenclatures>

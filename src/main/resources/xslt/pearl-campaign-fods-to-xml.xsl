@@ -32,7 +32,7 @@
     
     <xsl:template match="office:body/office:spreadsheet/table:table[@table:name='campaign']">
         <xsl:variable name="row" select="tools:get-full-row(table:table-row[2])"/>
-        <Id><xsl:value-of select="tools:getColumn($row,1)"/></Id>
+        <Id><xsl:value-of select="lower-case(tools:getColumn($row,1))"/></Id>
         <Label><xsl:value-of select="tools:getColumn($row,2)"/></Label>
         <StartDate><xsl:value-of select="tools:getColumn($row,3)"/></StartDate>
         <EndDate><xsl:value-of select="tools:getColumn($row,4)"/></EndDate>
