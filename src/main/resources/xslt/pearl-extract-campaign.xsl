@@ -21,7 +21,7 @@
     
     <xsl:template match="office:body/office:spreadsheet/table:table[@table:name='campaign']">
         <xsl:variable name="row" select="tools:get-full-row(table:table-row[2])"/>
-        <Campaign><xsl:value-of select="lower-case(tools:getColumn($row,1))"/></Campaign>
+        <Campaign><xsl:value-of select="upper-case(tools:getColumn($row,1))"/></Campaign>
         <CampaignLabel><xsl:value-of select="tools:getColumn($row,2)"/></CampaignLabel>
     </xsl:template>
     
