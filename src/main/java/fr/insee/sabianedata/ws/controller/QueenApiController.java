@@ -30,6 +30,7 @@ import java.nio.file.Path;
 import java.time.Clock;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Tag(name = "Queen : Post data to Queen API")
 @RestController
@@ -76,12 +77,12 @@ public class QueenApiController {
         su.setQuestionnaireId(questionnaireId);
         su.setStateData(new StateData());
         su.setDataFile("{}");
-        SurveyUnitDto suDto = new SurveyUnitDto(su);
 
-        for (int i = index; i < occurrences + index; i++) {
-            suDto.setId(campaign + i);
+        IntStream.range(index, occurrences + index).parallel().forEach(q -> {
+            SurveyUnitDto suDto = new SurveyUnitDto(su);
+            suDto.setId(campaign + q);
             LOGGER.info("su id : {}", suDto.getId());
-            try {
+            try{
                 queenApiService.postUeToApi(request, suDto, campaignDto, plateform).getStatusCode();
                 reporting.addSuccess(suDto.getId());
                 LOGGER.info("Successfully generated and integrated survey unit with id {} for campaign {}", suDto.getId(), campaign);
@@ -90,7 +91,7 @@ public class QueenApiController {
                 LOGGER.error("A problem occurred trying to integrate survey unit with id {}", suDto);
                 LOGGER.error(e.getMessage());
             }
-        }
+        });
         return ResponseEntity.ok().body(reporting);
     }
 

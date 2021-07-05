@@ -30,11 +30,13 @@ public class QueenApiService {
     @Autowired
     QueenProperties queenProperties;
 
+    @Autowired
+    RestTemplate restTemplate;
+
 
     public ResponseEntity<?> postCampaignToApi(HttpServletRequest request, CampaignDto campaignDto, Plateform plateform) {
         LOGGER.info("Creating Campaign"+campaignDto.getId());
         final String apiUri = queenProperties.getHostFromEnum(plateform) +"/api/campaigns";
-        RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = createSimpleHeadersAuth(request);
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         return restTemplate.exchange(apiUri, HttpMethod.POST, new HttpEntity<>(campaignDto, httpHeaders), String.class);
@@ -43,7 +45,6 @@ public class QueenApiService {
         LOGGER.info("Create SurveyUnit "+surveyUnitDto.getId());
         String idCampaign = campaignDto.getId();
         final String apiUri = queenProperties.getHostFromEnum(plateform) +"/api/campaign/"+idCampaign+"/survey-unit";
-        RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = createSimpleHeadersAuth(request);
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         return restTemplate.exchange(apiUri, HttpMethod.POST, new HttpEntity<>(surveyUnitDto, httpHeaders), String.class);
@@ -51,7 +52,6 @@ public class QueenApiService {
     public ResponseEntity<?> postNomenclaturesToApi(HttpServletRequest request, NomenclatureDto nomenclatureDto, Plateform plateform) {
         LOGGER.info("Create nomenclature "+nomenclatureDto.getId());
         final String apiUri = queenProperties.getHostFromEnum(plateform) +"/api/nomenclature";
-        RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = createSimpleHeadersAuth(request);
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         return restTemplate.exchange(apiUri, HttpMethod.POST, new HttpEntity<>(nomenclatureDto, httpHeaders), String.class);
@@ -59,7 +59,6 @@ public class QueenApiService {
     public ResponseEntity<?> postQuestionnaireModelToApi(HttpServletRequest request, QuestionnaireModelDto questionnaireModelDto, Plateform plateform) {
         LOGGER.info("Create Questionnaire "+questionnaireModelDto.getIdQuestionnaireModel());
         final String apiUri = queenProperties.getHostFromEnum(plateform) +"/api/questionnaire-models";
-        RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = createSimpleHeadersAuth(request);
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         return restTemplate.exchange(apiUri, HttpMethod.POST, new HttpEntity<>(questionnaireModelDto, httpHeaders), String.class);
@@ -67,7 +66,6 @@ public class QueenApiService {
 
     public ResponseEntity<String> createFullCampaign(HttpServletRequest request, File campaignZip, Plateform plateform) {
         final String apiUri = queenProperties.getHostFromEnum(plateform) +"/api/campaign/context";
-        RestTemplate restTemplate = new RestTemplate();
         MultiValueMap<String, Object> body
                 = new LinkedMultiValueMap<>();
         body.add("file", new FileSystemResource(campaignZip));
