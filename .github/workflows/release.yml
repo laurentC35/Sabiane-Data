@@ -71,7 +71,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: jar
-          path: target/sabianedata.jar
+          path: target/
       - name: read
         run: ls -l target/
       - name: Get current version
