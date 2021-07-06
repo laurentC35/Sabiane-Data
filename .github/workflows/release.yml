@@ -71,7 +71,6 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: jar
-          path: target/sabianedata.jar
       - name: Get current version
         id: version
         run: echo "::set-output name=prop::$(mvn -f pom.xml help:evaluate -Dexpression=project.version -q -DforceStdout)"
