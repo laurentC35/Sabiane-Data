@@ -61,7 +61,7 @@ jobs:
           asset_path: sabianedata.jar
           asset_name: sabianedata.jar
           asset_content_type: application/java-archive
-  docker:  
+  docker:
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -79,7 +79,7 @@ jobs:
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: laurentc35/sabiane-data
+          name: inseefrlab/sabiane-data
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           tags: ${{steps.version.outputs.prop}}
