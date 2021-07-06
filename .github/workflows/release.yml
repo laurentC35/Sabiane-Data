@@ -72,8 +72,6 @@ jobs:
         with:
           name: jar
           path: target/
-      - name: read
-        run: ls -l target/
       - name: Get current version
         id: version
         run: echo "::set-output name=prop::$(mvn -f pom.xml help:evaluate -Dexpression=project.version -q -DforceStdout)"
