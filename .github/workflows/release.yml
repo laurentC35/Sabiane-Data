@@ -62,6 +62,7 @@ jobs:
           asset_name: sabianedata.jar
           asset_content_type: application/java-archive
   docker:
+  
     needs: build
     runs-on: ubuntu-latest
     steps:
